@@ -1,0 +1,182 @@
+body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    min-height: 100%; /* 确保至少有100%的高度 */
+}
+
+body {
+    font-family: '宋体', sans-serif; /* 使用宋体字体 */
+    position: relative; /* 确保z-index生效 */
+}
+/* 个人问候样式 */
+.personal-greeting {
+    text-align: center;
+    margin: 20px 0 30px 0;
+    position: absolute;
+    top: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.personal-greeting h1 {
+    color: #ff69b4;
+    font-size: 2em;
+    margin: 10px 0;
+    font-family: inherit;
+    color: #ff69b4;
+    position: relative;
+    display: inline-block;
+    z-index: 11;
+    padding: 10px; /* 添加内边距，让爱心围绕区域更大 */
+}
+
+/* 爱心容器样式 - 动态心形排列 */
+.love-hearts-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    /* 尺寸将由JavaScript动态设置 */
+}
+
+/* 爱心样式 */
+.love-heart {
+    position: absolute;
+    font-size: 1.8em;
+    color: #ff69b4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+/* 脉动动画 */
+@keyframes heartPulse {
+    0%, 100% { 
+        transform: translateX(-50%) scale(1); 
+    }
+    50% { 
+        transform: translateX(-50%) scale(1.05); 
+    }
+}
+
+/* 倒计时结束后隐藏问候文字 */
+.countdown-ended .personal-greeting {
+    display: none;
+}
+
+/* 乌萨奇装饰层 */
+/* 乌萨奇装饰层 - 修改为全屏覆盖 */
+.usaqi-decoration {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-image: url('assets/usaqibg.png');  /* 只使用一张图片 */
+    background-repeat: repeat;  /* 平铺图片覆盖整个区域 */
+    background-size: 300px;  /* 调整图片大小，可以根据需要调整 */
+    opacity: 0.15;
+    z-index: 10;  
+    pointer-events: none;
+}
+
+/* 倒计时结束后隐藏乌萨奇装饰 */
+.countdown-ended .usaqi-decoration {
+    display: none;
+}
+
+/* 倒计时结束后设置黑色背景 */
+.countdown-ended {
+    background-color: #000 !important;
+}
+
+#countdown, #greetings, #previewButton {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 居中显示 */
+    z-index: 2; /* 确保这些元素在canvas之上 */
+    text-align: center; /* 文字居中 */
+    color: #fff; /* 文字颜色设置为白色 */
+    font-size: 36px; /* 调整字体大小确保可见 */
+    margin: 0; /* 移除默认的边距 */
+}
+
+#fireworksCanvas {
+    background: transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none; /* 允许鼠标事件穿透canvas */
+}
+
+
+ 
+/* 媒体查询：适应不同设备 */
+@media only screen and (max-width: 600px) {
+    #countdown, #greetings {
+        font-size: 24px; /* 在小屏幕上调整字体大小 */
+    }
+}
+/* 祝福语容器样式 */
+#greetings-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    text-align: center;
+    color: #fff;
+    font-size: 36px;
+    display: block;
+    width: 100%;
+    pointer-events: none; /* 确保不影响其他元素的点击 */
+}
+
+.greeting-message {
+    opacity: 0;
+    position: absolute; /* 绝对定位 */
+    top: 50%; /* 从容器中心开始定位 */
+    left: 50%; /* 从容器中心开始定位 */
+    transform: translate(-50%, -50%); /* 精确居中 */
+    transition: opacity 0.5s ease-in-out;
+    
+    /* 确保水平排布 */
+    writing-mode: horizontal-tb;
+    text-orientation: upright;
+    white-space: nowrap;
+    line-height: 1.2;
+    display: block;
+    
+    margin: 0; /* 重置margin */
+    padding: 0; /* 重置padding */
+}
+/* 显示状态 */
+.greeting-message.show {
+    opacity: 1;
+}
+
+/* 隐藏状态 */
+.greeting-message.hidden {
+    opacity: 0;
+}
+
+/* 响应式设计 */
+@media only screen and (max-width: 600px) {
+    #greetings-container {
+        font-size: 24px;
+    }
+    
+    .greeting-message {
+        font-size: 0.9em;
+    }
+}
